@@ -1,0 +1,6 @@
+flask[async]
+gunicorn[gthread]
+transformers[torch]
+pandas
+python-dotenv
+git+https://github.com/amazon-science/chronos-forecasting.git

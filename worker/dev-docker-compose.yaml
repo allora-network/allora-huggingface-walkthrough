@@ -1,0 +1,81 @@
+version: "3.8"
+services:
+  inference:
+    container_name: inference-hf
+    build:
+      context: .
+      dockerfile: Dockerfile_inference
+    command: python -u /app/app.py
+    ports:
+      - "8000:8000"
+    networks:
+      b7s-local:
+        aliases:
+          - inference
+        ipv4_address: 172.19.0.4
+  worker:
+    container_name: worker
+    build: .
+    environment:
+      - INFERENCE_API_ADDRESS=http://inference:8000
+    command:
+      - allora-node
+      - --role=worker
+      - --peer-db=/data/worker/peer-database
+      - --function-db=/data/worker/function-database
+      - --runtime-path=/app/runtime
+      - --runtime-cli=bls-runtime
+      - --workspace=/data/worker/workspace
+      - --private-key=/data/worker/key/priv.bin
+      - --log-level=debug
+      - --port=9011
+      - --topic=allora-topic-4-worker
+      - --boot-nodes=/ip4/172.19.0.100/tcp/9010/p2p/<head-id>
+    volumes:
+      - type: bind
+        source: ./data
+        target: /data
+    env_file:
+      - .env
+    depends_on:
+      - head
+    networks:
+      b7s-local:
+        aliases:
+          - worker
+        ipv4_address: 172.19.0.5
+
+  head:
+    container_name: head
+    image: alloranetwork/allora-inference-base-head:latest
+    command: 
+      - allora-node
+      - --role=head
+      - --peer-db=/data/head/peer-database
+      - --function-db=/data/head/function-database
+      - --runtime-path=/app/runtime
+      - --runtime-cli=bls-runtime
+      - --workspace=/data/head/workspace
+      - --private-key=/data/head/key/priv.bin
+      - --log-level=debug
+      - --port=9010
+      - --rest-api=:6000
+    ports:
+      - "6000:6000"
+    volumes:
+      - type: bind
+        source: ./data
+        target: /data
+
+    networks:
+      b7s-local:
+        aliases:
+          - head
+        ipv4_address: 172.19.0.100
+
+networks:
+  b7s-local:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.19.0.0/24
