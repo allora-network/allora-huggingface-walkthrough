@@ -21,7 +21,7 @@ services:
     environment:
       - HUGGINGFACE_TOPIC_ID=4     #! Pre created topic: BTC 24h
       - BOOT_NODES_URL=https://raw.githubusercontent.com/allora-network/networks/main/allora-testnet-1/heads.txt
-      - ALLORA_RPC=https://allora-rpc.testnet-1.testnet.allora.network:443
+      - ALLORA_RPC=https://allora-rpc.testnet-1.testnet.allora.network/
       - INFERENCE_API_ADDRESS=http://inference:8000
       - DATA_DIR=/data/worker
     build: .
@@ -44,9 +44,9 @@ services:
         --workspace=$${DATA_DIR}/workspace \
         --private-key=$${DATA_DIR}/key/priv.bin \
         --boot-nodes=$(curl -Ls $${BOOT_NODES_URL}) \
-        --allora-chain-home-dir=$${DATA_DIR}/.allorad \
+        --allora-chain-home-dir=/data/.allorad \
         --allora-node-rpc-address=$${ALLORA_RPC} \
-        --allora-chain-key-name=worker \
+        --allora-chain-key-name=huggingface-walkthrough \
         --allora-chain-topic-id=$${HUGGINGFACE_TOPIC_ID} \
         --topic=allora-topic-$${HUGGINGFACE_TOPIC_ID}-worker \
         --dialback-address=$${MY_IP} \
@@ -60,6 +60,7 @@ services:
     env_file:
       - .env
     ports:
-      - "9010:9010"           # Should match values of `--dialback-port`:`--port`
+      - "9010:9010" # expose p2p port (should match values of `--dialback-port`:`--port`)
+      - "2112:2112" # expose metrics port
     depends_on:
       - init_huggingface-walkthrough
