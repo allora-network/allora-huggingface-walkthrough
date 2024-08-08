@@ -1,4 +1,5 @@
 __pycache__
-**/.env
-**/keys*
-/worker/data
+.allorad
+.cache
+config.json
+env_file
