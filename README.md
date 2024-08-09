@@ -30,8 +30,8 @@ A complete working example is provided in the `docker-compose.yml` file.
     
     Run the following commands from the project's root directory to initialize the worker:
     ```sh
-    chmod +x init.docker
-    ./init.docker
+    chmod +x init.config
+    ./init.config
     ```
     These commands will:
     - Automatically create Allora keys for your worker.
@@ -54,7 +54,7 @@ A complete working example is provided in the `docker-compose.yml` file.
 
 ## Testing Inference Only
 
-This setup allows you to develop your model without the need to bring up the head and worker. To test the inference model only:
+This setup allows you to develop your model without the need to bring up the offchain worker. To test the inference model only:
 
 1. Run the following command to start the inference node:
     ```sh
