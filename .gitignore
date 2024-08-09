@@ -3,3 +3,4 @@ __pycache__
 .cache
 config.json
 env_file
+worker-data
