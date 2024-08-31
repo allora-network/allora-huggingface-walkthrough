@@ -71,12 +71,3 @@ This setup allows you to develop your model without the need to bring up the off
     {"value":"2564.021586281073"}
     ```
 
-3. Update the node's internal state (download pricing data, train, and update the model):
-    
-    ```sh
-    curl http://127.0.0.1:8000/update
-    ```
-    Expected response:
-    ```sh
-    0
-    ```
