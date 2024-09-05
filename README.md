@@ -9,7 +9,8 @@ See [complete walkthrough and instructions here](https://docs.allora.network/dev
 
 - **Worker**: The node that publishes inferences to the Allora chain.
 - **Inference**: A container that conducts inferences, maintains the model state, and responds to internal inference requests via a Flask application. This node operates with a basic linear regression model for price predictions.
-
+- **Updater**: A cron-like container designed to update the inference node's data by daily fetching the latest market information from the data provider, ensuring the model stays current with new market trends.
+  
 Check the `docker-compose.yml` file for the detailed setup of each component.
 
 ## Docker-Compose Setup
