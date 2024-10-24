@@ -3,12 +3,13 @@
         "addressKeyName": "test",
         "addressRestoreMnemonic": "",
         "alloraHomeDir": "",
-        "gas": "1000000",
-        "gasAdjustment": 1.0,
-        "nodeRpc": "http://localhost:26657",
-        "maxRetries": 1,
-        "delay": 1,
-        "submitTx": false
+        "gas": "auto",
+        "gasAdjustment": 1.5,
+        "nodeRpc": "https://allora-rpc.testnet.allora.network",
+        "maxRetries": 5,
+        "retryDelay": 3,
+        "accountSequenceRetryDelay": 5,
+        "submitTx": true
     },
     "worker": [
         {
